@@ -1,8 +1,5 @@
 FROM php:8.1-fpm
 
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV user="foo"
 ENV uid="1000"
