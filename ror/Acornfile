@@ -1,0 +1,28 @@
+containers: {
+	web: {
+		build: {
+			context:    "./src"
+			dockerfile: "./src/Dockerfile"
+		}
+		ports: publish: "3000:3000/http"
+		dependsOn: ["db"]
+		env: {
+			POSTGRES_USER:   "postgres"
+			POSTGRES_PASSWD: "secret://postgres-password/token"
+			POSTGRES_HOST:   "db"
+		}
+	}
+	db: {
+		image: "postgres:alpine3.15"
+		env: {
+			POSTGRES_PASSWORD: "secret://postgres-password/token"
+		}
+        ports: "5432"
+
+	}
+}
+
+secrets: {
+
+	"postgres-password": type: "token"
+}
