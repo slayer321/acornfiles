@@ -1,0 +1,39 @@
+containers: {
+	app: {
+		build: {
+			context:    "."
+			dockerfile: "Dockerfile"
+		}
+		dirs: "/var/www": "./src"
+        ports: "9000"
+	}
+	db: {
+		image: "mysql:5.7"
+		env: {
+			MYSQL_DATABASE:      "acorndb"
+			MYSQL_ROOT_PASSWORD: "secret://mysql-root-password/token"
+			MYSQL_PASSWORD:      "secret://mysql-password/token"
+			MYSQL_USER:          "acornuser"
+			SERVICE_TAGS:        "dev"
+			SERVICE_NAME:        "mysql"
+		}
+	}
+	nginx: {
+		image: "nginx:alpine"
+		ports: publish: "8000:80/http"
+		dirs: {
+			"/var/www":          "./src"
+			"/etc/nginx/conf.d": "./docker-compose/nginx"
+		}
+	}
+}
+
+
+secrets: {
+    "mysql-root-password": {
+        type: "token"
+    }
+    "mysql-password": {
+        type: "token"
+    }
+}
