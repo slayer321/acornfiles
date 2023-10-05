@@ -5,7 +5,7 @@ containers: {
 			dockerfile: "Dockerfile"
 		}
 		dirs: "/var/www": "./src"
-        ports: "9000"
+		ports: "9000"
 	}
 	db: {
 		image: "mysql:5.7"
@@ -28,12 +28,7 @@ containers: {
 	}
 }
 
-
 secrets: {
-    "mysql-root-password": {
-        type: "token"
-    }
-    "mysql-password": {
-        type: "token"
-    }
+	"mysql-root-password": type: "token"
+	"mysql-password": type: "token"
 }
