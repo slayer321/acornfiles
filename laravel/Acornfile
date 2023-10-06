@@ -1,3 +1,9 @@
+args: {
+	mysql_passwd:      ""
+	mysql_root_passwd: ""
+	mysql_db:          ""
+	mysql_user:        ""
+}
 containers: {
 	app: {
 		build: {
@@ -10,10 +16,10 @@ containers: {
 	db: {
 		image: "mysql:5.7"
 		env: {
-			MYSQL_DATABASE:      "acorndb"
-			MYSQL_ROOT_PASSWORD: "secret://mysql-root-password/token"
-			MYSQL_PASSWORD:      "secret://mysql-password/token"
-			MYSQL_USER:          "acornuser"
+			MYSQL_DATABASE:      std.ifelse( args.mysql_db != "", args.mysql_db, "acorndb")
+			MYSQL_PASSWORD:      std.ifelse( args.mysql_passwd != "", args.mysql_passwd, "${secret://mysql-password/token}")
+			MYSQL_ROOT_PASSWORD: std.ifelse( args.mysql_root_passwd != "", args.mysql_root_passwd, "${secret://mysql-root-password/token}")
+			MYSQL_USER:          std.ifelse( args.mysql_user != "", args.mysql_user, "acornuser")
 			SERVICE_TAGS:        "dev"
 			SERVICE_NAME:        "mysql"
 		}
@@ -30,5 +36,5 @@ containers: {
 
 secrets: {
 	"mysql-root-password": type: "token"
-	"mysql-password": type: "token"
+	"mysql-password": type:      "token"
 }

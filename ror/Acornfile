@@ -1,3 +1,8 @@
+args: {
+	postgres_passwd: ""
+	postgres_host:   ""
+	postgres_user:   ""
+}
 containers: {
 	web: {
 		build: {
@@ -7,22 +12,16 @@ containers: {
 		ports: publish: "3000:3000/http"
 		dependsOn: ["db"]
 		env: {
-			POSTGRES_USER:   "postgres"
-			POSTGRES_PASSWD: "secret://postgres-password/token"
-			POSTGRES_HOST:   "db"
+			POSTGRES_USER:   std.ifelse( args.postgres_user != "", args.postgres_user, "postgres")
+			POSTGRES_PASSWD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
+			POSTGRES_HOST:   std.ifelse( args.postgres_host != "", args.postgres_host, "db")
 		}
 	}
 	db: {
 		image: "postgres:alpine3.15"
-		env: {
-			POSTGRES_PASSWORD: "secret://postgres-password/token"
-		}
-        ports: "5432"
-
+		env: POSTGRES_PASSWORD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
+		ports: "5432"
 	}
 }
 
-secrets: {
-
-	"postgres-password": type: "token"
-}
+secrets: "postgres-password": type: "token"
