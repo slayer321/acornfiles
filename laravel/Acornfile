@@ -7,8 +7,8 @@ args: {
 containers: {
 	app: {
 		build: {
-			context:    "."
-			dockerfile: "Dockerfile"
+			context:    "./src"
+			dockerfile: "./src/Dockerfile"
 		}
 		dirs: "/var/www": "./src"
 		ports: "9000"

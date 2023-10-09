@@ -1,6 +1,7 @@
 ## Laravel Acornfile
 
-##### TL: DR  `acorn run -n laravel .`
+##### TL: DR 
+> Note : add the .env file inside the src dir . You can copy  .env.example and modify based on your requirement.
 ```
 acorn run -n laravel .
 ```

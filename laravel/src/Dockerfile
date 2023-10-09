@@ -37,3 +37,4 @@ USER $user
 # RUN rm -rf vendor composer.lock
 # RUN composer install
 # RUN php artisan key:generate
+CMD bash -c "composer install && php artisan key:generate && php-fpm"
