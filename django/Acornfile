@@ -1,0 +1,10 @@
+containers: {
+    web: {
+		build: {
+			context:    "./mysite"
+			dockerfile: "./mysite/Dockerfile"
+		}
+		ports: publish: "8000:8000/http"
+        if args.dev { dirs: "/app": "./mysite" }
+	}
+}
