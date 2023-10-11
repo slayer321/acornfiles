@@ -3,39 +3,22 @@
 ##### TL: DR 
 > Note : add the .env file inside the src dir . You can copy  .env.example and modify based on your requirement.
 ```
-acorn run -n laravel .
+$ acorn run -n laravel .
 ```
 
-Hi, here we have the Simple Hello world `Laravel` framework Application and we are going to use Acornfile to deploy it on Kuberenetes.
+Hi, we have developed a simple `TODO App` using Laravel framework and we have the AcornFile which can be used to deploy the Application on Kubernetes.
 
 ###### Steps:
 
 - If you want to just deploy the application with defaults use below command
 ```
-acorn run -n laravel .
+$ acorn run -n laravel .
 ```
 
-- You can check all the available Args by running `acorn run -n laravel . --help`
+- If you are developing your application an you don’t what to restart the pods everytime you make the changes you can simply use the acorn dev command which will run the Laravel Application in dev mode and all the changes will the reflected to the UI as soon as you save the file. 
 ```
-demo@demo:~/laravel $ acorn run -n laravel . --help
-
-Volumes:   <none>
-Secrets:   mysql-root-password, mysql-password
-Containers: app, db, nginx
-Ports:     app:9000/tcp, nginx:8000:80/http
-
-      --mysql-db string            
-      --mysql-passwd string        
-      --mysql-root-passwd string   
-      --mysql-user string          
-  
+$ acorn dev -n laravel .
 ```
-- If you didn't pass the `--mysql-root-passwd`  and `--mysql-passwd` args a random token will be generated. 
-- To cutomize the args 
-```
-$ acorn run -n laravel . --mysql-db "db" --mysql-passwd "secretpasswd" --mysql-root-passwd "secretrootpasswd" --mysql-user "test"
-```
-
 As this Application just include the simple Hello world Application which can be easily customized based on your requirement . You can follow Laravel docs.
 
 - [Getting Started](https://laravel.com/docs/10.x/installation)
