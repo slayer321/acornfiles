@@ -45,4 +45,4 @@ COPY . /var/www
 # RUN php artisan cache:clear
 
 #CMD bash -c "chmod -R guo+w storage && php-fpm"
-CMD bash -c "composer install && php artisan key:generate && chmod -R guo+w storage && php-fpm"
+CMD bash -c "composer install && php artisan key:generate && chmod -R guo+w storage && php artisan migrate && php-fpm"

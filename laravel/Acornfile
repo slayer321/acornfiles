@@ -1,9 +1,5 @@
-args: {
-	mysql_passwd:      ""
-	mysql_root_passwd: ""
-	mysql_db:          ""
-	mysql_user:        ""
-}
+services: db: image: "ghcr.io/acorn-io/mariadb:v1.0.0"
+
 containers: {
 	app: {
 		build: {
@@ -12,14 +8,12 @@ containers: {
 		}
 		dirs: "/var/www": "./src"
 		ports: "9000"
-	}
-	db: {
-		image: "mysql:5.7"
 		env: {
-			MYSQL_DATABASE:      std.ifelse( args.mysql_db != "", args.mysql_db, "acorndb")
-			MYSQL_PASSWORD:      std.ifelse( args.mysql_passwd != "", args.mysql_passwd, "${secret://mysql-password/token}")
-			MYSQL_ROOT_PASSWORD: std.ifelse( args.mysql_root_passwd != "", args.mysql_root_passwd, "${secret://mysql-root-password/token}")
-			MYSQL_USER:          std.ifelse( args.mysql_user != "", args.mysql_user, "acornuser")
+			DB_HOST: "@{service.db.address}"
+			DB_PORT: "@{service.db.port.3306}"
+			DB_DATABASE: "@{service.db.data.dbName}"
+			DB_USERNAME: "@{service.db.secrets.admin.username}"
+			DB_PASSWORD: "@{service.db.secrets.admin.password}"
 			SERVICE_TAGS:        "dev"
 			SERVICE_NAME:        "mysql"
 		}
@@ -32,9 +26,4 @@ containers: {
 			"/etc/nginx/conf.d": "./docker-compose/nginx"
 		}
 	}
-}
-
-secrets: {
-	"mysql-root-password": type: "token"
-	"mysql-password": type:      "token"
 }
