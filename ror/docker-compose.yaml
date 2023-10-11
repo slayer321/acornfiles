@@ -3,14 +3,29 @@ services:
   app:
     build:
       context: ./src
-      dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWD: example
-      POSTGRES_HOST: db
+      MARIADB_USER: root
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_HOST: 0.0.0.0
+      MARIADB_PORT: 3306
+      MARIADB_DATABASE: rordemo
     ports:
       - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - ror
   db:
-    image: postgres:alpine3.15
+    image: mariadb:10.11
     environment:
-      POSTGRES_PASSWORD: example
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_DATABASE: rordemo
+    ports:
+      - "3306:3306"
+    networks:
+      - ror
+
+
+networks:
+  ror:
+    driver: bridge

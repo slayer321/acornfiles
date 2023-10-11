@@ -10,8 +10,7 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-  config.hosts.clear
-  #config.hosts << "web-ror-2e3a0214.v0vv3h.oss-acorn.io"
+
   # Show full error reports.
   config.consider_all_requests_local = true
 
