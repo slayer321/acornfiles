@@ -17,6 +17,12 @@ containers: {
 			SERVICE_TAGS:        "dev"
 			SERVICE_NAME:        "mysql"
 		}
+		if args.dev {
+			env: {
+				APP_DEBUG: "true"
+			}
+			dirs: "/var/www": "./src"
+		}
 	}
 	nginx: {
 		image: "nginx:alpine"
