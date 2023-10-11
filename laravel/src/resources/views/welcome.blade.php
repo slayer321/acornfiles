@@ -16,6 +16,6 @@
         </style>
     </head>
     <body class="antialiased">
-        <h1> Hello World </h1>
+        <h1> This is the Simple TODO App using Laravel Framework.Use the /todos endpoint to get the Application. </h1>
     </body>
 </html>
