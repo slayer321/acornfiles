@@ -1,9 +1,3 @@
-// args: {
-// 	postgres_passwd: ""
-// 	postgres_host:   ""
-// 	postgres_user:   ""
-// }
-
 services: db: image: "ghcr.io/acorn-io/mariadb:v1.0.0"
 
 
@@ -22,9 +16,4 @@ containers: {
 			MARIADB_DATABASE: "@{service.db.data.dbName}"
 		}
 	}
-	// db: {
-	// 	image: "postgres:alpine3.15"
-	// 	env: POSTGRES_PASSWORD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
-	// 	ports: "5432"
-	// }
 }
