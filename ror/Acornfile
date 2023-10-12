@@ -1,8 +1,12 @@
-args: {
-	postgres_passwd: ""
-	postgres_host:   ""
-	postgres_user:   ""
-}
+// args: {
+// 	postgres_passwd: ""
+// 	postgres_host:   ""
+// 	postgres_user:   ""
+// }
+
+services: db: image: "ghcr.io/acorn-io/mariadb:v1.0.0"
+
+
 containers: {
 	web: {
 		build: {
@@ -10,18 +14,17 @@ containers: {
 			dockerfile: "./src/Dockerfile"
 		}
 		ports: publish: "3000:3000/http"
-		dependsOn: ["db"]
 		env: {
-			POSTGRES_USER:   std.ifelse( args.postgres_user != "", args.postgres_user, "postgres")
-			POSTGRES_PASSWD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
-			POSTGRES_HOST:   std.ifelse( args.postgres_host != "", args.postgres_host, "db")
+			MARIADB_USER: "@{service.db.secrets.admin.username}"
+			MARIADB_ROOT_PASSWORD: "@{service.db.secrets.admin.password}"
+			MARIADB_HOST: "@{service.db.address}"
+			MARIADB_PORT: "@{service.db.port.3306}"
+			MARIADB_DATABASE: "@{service.db.data.dbName}"
 		}
 	}
-	db: {
-		image: "postgres:alpine3.15"
-		env: POSTGRES_PASSWORD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
-		ports: "5432"
-	}
+	// db: {
+	// 	image: "postgres:alpine3.15"
+	// 	env: POSTGRES_PASSWORD: std.ifelse( args.postgres_passwd != "", args.postgres_passwd, "${secret://postgres-password/token}")
+	// 	ports: "5432"
+	// }
 }
-
-secrets: "postgres-password": type: "token"

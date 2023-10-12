@@ -6,7 +6,7 @@ services:
     environment:
       MARIADB_USER: root
       MARIADB_ROOT_PASSWORD: example
-      MARIADB_HOST: 0.0.0.0
+      MARIADB_HOST: db
       MARIADB_PORT: 3306
       MARIADB_DATABASE: rordemo
     ports:
@@ -20,8 +20,8 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: example
       MARIADB_DATABASE: rordemo
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
     networks:
       - ror
 

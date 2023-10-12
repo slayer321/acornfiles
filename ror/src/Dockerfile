@@ -19,4 +19,7 @@ COPY . .
 EXPOSE 3000
 RUN npm install -g yarn
 RUN rails webpacker:install
-CMD ["rails", "server","-b", "0.0.0.0"]
+#RUN rails db:migrate
+#CMD ["rails", "server","-b", "0.0.0.0"]
+
+CMD bash -c "sleep 10 && rails db:migrate && rails server -b 0.0.0.0"
