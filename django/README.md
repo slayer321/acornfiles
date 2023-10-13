@@ -6,7 +6,7 @@ Here we have the Simple `Voting App` using Django framework and we have the Acor
 ##### Deploying the App on SaaS Platform.
 - First you need to login to saas platform using your github username.Once the Account is setup you need to click on create and select `from acorn image` where you need to select `name`, `region` and `Acron Image`. For Django below is the latest image
 ```
-ghcr.io/infracloudio/django-acorn:v0.0.1
+ghcr.io/infracloudio/django-acorn:v0.0.5
 ```
 Once you click on `Create` , Provisioning starts and in some time your app is in Running state and you can access it using the given URL.
 
