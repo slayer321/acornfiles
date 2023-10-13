@@ -3,22 +3,32 @@
 FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
 EXPOSE 8000
 WORKDIR /app 
+# Install system dependencies
+RUN apk update
+RUN apk add \
+    pkgconfig \
+    gcc \
+    musl-dev \
+    bash \
+    mariadb-dev
+
 COPY requirements.txt /app
 RUN pip3 install -r requirements.txt --no-cache-dir
 COPY . /app 
-ENTRYPOINT ["python3"] 
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+#ENTRYPOINT ["python3"] 
+#CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+CMD bash -c "sleep 10 && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
 
-FROM builder as dev-envs
-RUN <<EOF
-apk update
-apk add git
-EOF
+# FROM builder as dev-envs
+# RUN <<EOF
+# apk update
+# apk add git
+# EOF
 
-RUN <<EOF
-addgroup -S docker
-adduser -S --shell /bin/bash --ingroup docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+# RUN <<EOF
+# addgroup -S docker
+# adduser -S --shell /bin/bash --ingroup docker vscode
+# EOF
+# # install Docker tools (cli, buildx, compose)
+# COPY --from=gloursdocker/docker / /
+# CMD ["manage.py", "runserver", "0.0.0.0:8000"]
