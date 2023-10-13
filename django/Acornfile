@@ -1,3 +1,5 @@
+services: db: image: "ghcr.io/acorn-io/mariadb:v1.0.0"
+
 containers: {
     web: {
 		build: {
@@ -6,5 +8,12 @@ containers: {
 		}
 		ports: publish: "8000:8000/http"
         if args.dev { dirs: "/app": "./mysite" }
+		env: {
+			MARIADB_USER: "@{service.db.secrets.admin.username}"
+			MARIADB_ROOT_PASSWORD: "@{service.db.secrets.admin.password}"
+			MARIADB_HOST: "@{service.db.address}"
+			MARIADB_PORT: "@{service.db.port.3306}"
+			MARIADB_DATABASE: "@{service.db.data.dbName}"
+		}
 	}
 }

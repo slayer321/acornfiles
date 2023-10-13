@@ -1,35 +1,22 @@
 ## Django Acornfile
 
-##### TL: DR 
+Here we have the Simple `Voting App` using Django framework and we have the Acornfile which can be used to deploy it on Acorn SaaS Platform.
+
+
+##### Deploying the App on SaaS Platform.
+- First you need to login to saas platform using your github username.Once the Account is setup you need to click on create and select `from acorn image` where you need to select `name`, `region` and `Acron Image`. For Django below is the latest image
 ```
-acorn run -n django .
+ghcr.io/infracloudio/django-acorn:v0.0.1
 ```
+Once you click on `Create` , Provisioning starts and in some time your app is in Running state and you can access it using the given URL.
 
-Hi, here we have the Simple Hello world `Django` framework Application and we are going to use Acornfile to deploy it on Kuberenetes.
+##### Checking App logs
+- You can click on 4 dots on the right side of your app on the UI and click on View Logs through which you can see your app Logs.
 
-###### Steps:
+##### Removing the App
+- If you simply want to remove the App . Click on the 4 dots and select `Remove` which will remove your app.
 
-- If you want to just deploy the application with defaults use below command
-```
-acorn run -n django .
-```
-
-- You can check all the available Args by running `acorn run -n django . --help`
-```
-demo@demo:~/django $ acorn run -n django . --help
-
-Volumes:   <none>
-Secrets:   <none>
-Containers: web
-Ports:     web:8000/http      
-  
-```
-- Currently there is no such args added as it is by default using sqlite database. Which can be easily customized following this [docs](https://docs.djangoproject.com/en/4.2/intro/install/#set-up-a-database). 
-
-- This Acornfile provide the feature to run Django Application in debug mode. If you run the application with this command `acorn dev -n django .`
-You can see all the changes reflected to your application.
-
-As this Application just include the simple Hello world Application which can be easily customized based on your requirement . You can follow Django docs.
+As this Application just include the simple `Voting Poll` App which can be easily customized based on your requirement . You can follow Django docs.
 
 - [Getting Started](https://docs.djangoproject.com/en/4.2/intro/tutorial01/)
 
